@@ -10,7 +10,9 @@
 
 #define DDR DDRG
 #define PORT PORTG
-#define LED PORTG1
+#define LED0 PORTG0
+#define LED1 PORTG1
+#define LED2 PORTG2
 
 int cnt = 0, cnt1 = 0, cntEX = 5, st = 0;
 
@@ -37,13 +39,38 @@ ISR(TIMER0_OVF_vect)
 			cnt1 = 0;
 			if(st)
 			{
-				PORT &= ~(1<<LED);
+				PORT &= ~(1<<LED0);
 				st = 0;
 			}
 			else
 			{
-				PORT |= (1<<LED);
+				PORT |= (1<<LED0);
 				st = 1;
+			}
+		}
+	}
+}
+
+int ocnt = 0, ocnt1 = 0, ocntEX = 5, ost = 0;
+ISR(TIMER0_COMP_vect)
+{
+	ocnt ++;  // 타이머 호출 시마다 cnt 1씩 증가
+	if(ocnt > 25)  // (1/16M) * 256 * 256 * 25 = 0.102s == 100ms
+	{
+		ocnt = 0;
+		ocnt1++;
+		if(ocnt1 >= ocntEX)
+		{
+			ocnt1 = 0;
+			if(ost)
+			{
+				PORT &= ~(1<<LED1);
+				ost = 0;
+			}
+			else
+			{
+				PORT |= (1<<LED1);
+				ost = 1;
 			}
 		}
 	}
@@ -51,15 +78,17 @@ ISR(TIMER0_OVF_vect)
 
 int main(void)
 {
-	DDR |= (1<<LED);  // = _BV(PORTG1), LED 포트 설정
-	PORT |= (1<<LED);  // = _BV(PORTG1), LED On
+	DDR |= ((1<<LED0) | (1<<LED1) | (1<<LED2));  // G0, G1, G2 출력 포트 선언 (LED)
+	PORT |= ((1<<LED0) | (1<<LED1) | (1<<LED2));  // G0, G1, G2 LED On
     StandBy();
-	PORT &= ~(1<<LED); // 버튼이 눌린 후, LED Off
+	PORT &= ~((1<<LED0) | (1<<LED1) | (1<<LED2)); // 버튼이 눌린 후, LED Off
 	
 	// 16ms마다 Timer 인터럽트 실행
 	TIMSK |= 0x01;  // TOIE0 (Timer Overflow Interrupt Enable)
-	TCCR0 |= 0x06;  // 분주비 256 설정
-	sei();  // 인터럽트 종료 함수
+	TCCR0 |= 0x0E;  // 분주비 256 설정
+	
+	OCR0 = 128;  // CTC 모드의 인터럽트 발생 지점 : 256의 절반
+	TIMSK |= (1<<OCIE0);  // 비교일치인터럽트 선언
 	
 	EIMSK |= 0x03;  // external 인터럽트 호출 PD0, PD1  : 0b 0000 0011
 	EICRA = 0x0F;  // 상승 엣지 동작
