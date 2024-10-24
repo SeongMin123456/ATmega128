@@ -13,6 +13,8 @@ Project("{54F91283-7BC4-4236-8FF9-10F437C3AD48}") = "test04_timer16", "test04_ti
 EndProject
 Project("{54F91283-7BC4-4236-8FF9-10F437C3AD48}") = "test05_FND", "test05_FND\test05_FND.cproj", "{1B5E3F68-22CB-48E4-8BAC-B606D9FD5A80}"
 EndProject
+Project("{54F91283-7BC4-4236-8FF9-10F437C3AD48}") = "PWM_main", "PWM_main\PWM_main.cproj", "{6E2ACD79-176C-43B7-AB41-ED511736F0B3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|AVR = Debug|AVR
@@ -39,6 +41,10 @@ Global
 		{1B5E3F68-22CB-48E4-8BAC-B606D9FD5A80}.Debug|AVR.Build.0 = Debug|AVR
 		{1B5E3F68-22CB-48E4-8BAC-B606D9FD5A80}.Release|AVR.ActiveCfg = Release|AVR
 		{1B5E3F68-22CB-48E4-8BAC-B606D9FD5A80}.Release|AVR.Build.0 = Release|AVR
+		{6E2ACD79-176C-43B7-AB41-ED511736F0B3}.Debug|AVR.ActiveCfg = Debug|AVR
+		{6E2ACD79-176C-43B7-AB41-ED511736F0B3}.Debug|AVR.Build.0 = Debug|AVR
+		{6E2ACD79-176C-43B7-AB41-ED511736F0B3}.Release|AVR.ActiveCfg = Release|AVR
+		{6E2ACD79-176C-43B7-AB41-ED511736F0B3}.Release|AVR.Build.0 = Release|AVR
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
