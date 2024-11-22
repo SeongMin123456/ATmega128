@@ -12,8 +12,9 @@
 #include <avr/io.h>
 
 #define buzz PORTB5
-volatile int i = 0;
 
+
+volatile int i = 0;
 int CS = 8; // 분주비
 enum { DO = 130, Do = 138, RE = 146, Re = 155, MI = 164, FA = 174, Fa = 185, SL = 196, Sl = 207, LA =  220, La = 233, SI = 246};
 int song[] = { SL, SL, LA, LA, SL, SL, MI, SL, SL, MI, MI, RE, SL, SL, LA, LA, SL, SL, MI, SL, MI, RE, MI, DO};
